@@ -1,0 +1,361 @@
+<!DOCTYPE HTML>
+<html lang="python web">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="勾陈的博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://chendongqing.com">
+    <!--SEO-->
+
+    <meta name="keywords" content="JavaScript">
+
+
+    <meta name="description" content="JavaScript作用域、作用域链
+因为每一个对象都可以有属性，有方法，  那么一切是对象的东西就可以有属性，函数也是一种特殊的对象，所以函数也有属性12345function test()&...">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+
+    <!--Title-->
+
+
+<title>JavaScript作用域、作用域链 | 勾陈的博客</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="勾陈的博客" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+	<div class="hide">
+		<script type="text/javascript">
+			var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+		</script>
+	</div>
+
+
+
+
+
+
+    
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header">
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title="勾陈">
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                <h2> 不积硅步 无以至千里 </h2>
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="http://chendongqing.com">勾陈的博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa icon1 iconn"></i>Home</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/前端/"><i class="fa icon2 iconn"></i>前端</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/后端/"><i class="fa icon3 iconn"></i>后端</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/书籍/"><i class="fa icon4 iconn"></i>书籍</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/工具/"><i class="fa icon5 iconn"></i>工具</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/archives/"><i class="fa icon6 iconn"></i>时间轴</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="JavaScript作用域、作用域链">
+            
+	            JavaScript作用域、作用域链
+            
+        </h1>
+        <div class="post-meta">
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/前端/">前端</a>
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-link" href="/tags/JavaScript/">JavaScript</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2019/05/01</span>
+        </span>
+        
+            <span class="fa-wrap">
+                <i class="fa fa-eye"></i>
+                <span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    
+</div>
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <h1 id="JavaScript作用域、作用域链"><a href="#JavaScript作用域、作用域链" class="headerlink" title="JavaScript作用域、作用域链"></a><strong>JavaScript作用域、作用域链</strong></h1><hr>
+<h4 id="因为每一个对象都可以有属性，有方法，-那么一切是对象的东西就可以有属性，函数也是一种特殊的对象，所以函数也有属性"><a href="#因为每一个对象都可以有属性，有方法，-那么一切是对象的东西就可以有属性，函数也是一种特殊的对象，所以函数也有属性" class="headerlink" title="因为每一个对象都可以有属性，有方法，  那么一切是对象的东西就可以有属性，函数也是一种特殊的对象，所以函数也有属性"></a><strong>因为每一个对象都可以有属性，有方法，  那么一切是对象的东西就可以有属性，函数也是一种特殊的对象，所以函数也有属性</strong></h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line">test.name</span><br><span class="line">test.[[scope]]</span><br></pre></td></tr></table></figure>
+<p>函数对象可以有很多属性，有的可以访问，例如’test.name’，有的访问不了，例如’test.[[scope]]’  , 这个[[scope]]是一个隐式的属性，是给系统调用的,翻译成中文是‘域’的意思，可以理解为作用域。</p>
+<h5 id="仔细说说-scope"><a href="#仔细说说-scope" class="headerlink" title="仔细说说[[scope]]"></a><strong>仔细说说[[scope]]</strong></h5><p>[[scope]]：每一个javascript函数都是一个对象，这个对象中有一个仅仅供javascript引擎存取的属性就是[[scope]]，[[scope]]就是我们所说的作用域，其中存储了函数运行期上下文的集合。</p>
+<h5 id="作用域链"><a href="#作用域链" class="headerlink" title="作用域链"></a><strong>作用域链</strong></h5><p>作用域链就是[[scope]]中存储的函数执行期上下文对象的集合，因为这个集合呈链式，所以将它叫做，作用域链     </p>
+<p>简单粗暴理解一下，函数的作用域里存着作用域链，而这个作用域链就是函数执行期上下文对象的集合</p>
+<h4 id="上下文集合是神马"><a href="#上下文集合是神马" class="headerlink" title="上下文集合是神马"></a><strong>上下文集合是神马</strong></h4><p>要想理解上下文集合，必须理解<strong>预编译</strong>的知识，这也是为什么闭包这一块很难理解的原因，所有知识点环环相扣，不能理解上一点，很难理解下一点，所以看此文章如果是纯小白，可以先看上篇预编译的理解。</p>
+<p>接下来直接上代码更加有助于我们理解</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> a = <span class="number">1</span>;</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">b</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">var</span> b = <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    b();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> c = <span class="number">10</span>;</span><br><span class="line">a()</span><br></pre></td></tr></table></figure>
+<p>在这个a函数刚刚是出生的时候，就存在属性了， 比如‘a.name’，同样的，他也产生了作用域‘a.[[scope]]’, 那他的作用域是什么呢？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">a.[[scope]] 中存的是上下文集合，我们就把它看作一个集合 []</span><br><span class="line">a函数出生时（定义），[]中添加上第一个元素  叫做GO 此时下标为0，</span><br><span class="line">-------------------------------------------------------------</span><br><span class="line">    a               |scope chain|           Global object  </span><br><span class="line">[[scope]]   ---&gt;    |  0  |  GO  |   -----&gt;    全局对象</span><br><span class="line">-------------------------------------------------------------</span><br><span class="line">a函数被定义之后，是需要执行的，那执行的时候发生了什么事呢，需要生成AO</span><br><span class="line">-------------------------------------------------------------</span><br><span class="line">    a               |scope chain|          Activation object </span><br><span class="line">                    |  0  |  AO  |           AO-&gt;执行环境</span><br><span class="line">[[scope]]   ---&gt;    |  1  |  GO  |   -----&gt;  GO-&gt;全局对象</span><br><span class="line">-------------------------------------------------------------</span><br><span class="line">如果a函数再次运行，会再次生成全新的AO</span><br><span class="line">-------------------------------------------------------------</span><br><span class="line">    a               |scope chain|          Activation object </span><br><span class="line">                    |  0  |  AO  |           AO-&gt;执行环境</span><br><span class="line">[[scope]]   ---&gt;    |  1  |  AO  |           AO-&gt;执行环境</span><br><span class="line">                    |  2  |  GO  |   -----&gt;  GO-&gt;全局对象</span><br><span class="line">-------------------------------------------------------------</span><br></pre></td></tr></table></figure>
+<p>在函数a当中,还定义了b函数，那么b函数的作用域又是什么呢？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">b函数出生时（定义），a函数的执行产生了b函数的定义，所以它会站在巨人的肩膀上看世界</span><br><span class="line">b继承a 的作用域 </span><br><span class="line">-------------------------------------------------------------</span><br><span class="line">    b               |scope chain|          Activation object </span><br><span class="line">                    |  0  |  AO  |           AO-&gt;执行环境</span><br><span class="line">[[scope]]   ---&gt;    |  1  |  GO  |   -----&gt;  GO-&gt;全局对象</span><br><span class="line">-------------------------------------------------------------</span><br><span class="line">b函数被定义之后，是需要执行的，那执行的时候发生了什么事呢，需要生成AO</span><br><span class="line">-------------------------------------------------------------</span><br><span class="line">    b               |scope chain|          Activation object </span><br><span class="line">                    |  0  |  AO  |           AO-&gt;执行环境</span><br><span class="line">                    |  1  |  AO  |           AO-&gt;执行环境</span><br><span class="line">[[scope]]   ---&gt;    |  2  |  GO  |   -----&gt;  GO-&gt;全局对象</span><br><span class="line">-------------------------------------------------------------</span><br></pre></td></tr></table></figure>
+<p>现在会产生一个疑问，b函数站在巨人的肩膀上看世界 ，那么继承的a函数的’AO’，这个AO’属于a函数吗？   </p>
+<p>答案是肯定的，这个’AO’属于a函数，是b函数拿的a函数AO的引用，所以在b函数中改变a函数中的变量值，这个变量是会改变的。</p>
+<h5 id="总结：每一个函数都有一个属于自己的执行期上下文集合，叫做作用域链，当我们正真在这个函数中访问一个变量的时候，一定要遵循这个函数所产生的作用域链去访问。"><a href="#总结：每一个函数都有一个属于自己的执行期上下文集合，叫做作用域链，当我们正真在这个函数中访问一个变量的时候，一定要遵循这个函数所产生的作用域链去访问。" class="headerlink" title="总结：每一个函数都有一个属于自己的执行期上下文集合，叫做作用域链，当我们正真在这个函数中访问一个变量的时候，一定要遵循这个函数所产生的作用域链去访问。"></a><strong>总结：每一个函数都有一个属于自己的执行期上下文集合，叫做作用域链，当我们正真在这个函数中访问一个变量的时候，一定要遵循这个函数所产生的作用域链去访问。</strong></h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">b</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            </span><br><span class="line">        &#125;c()</span><br><span class="line">    &#125;b()</span><br><span class="line">&#125; a()</span><br><span class="line">接下来我们列出abc三个函数，分别 从定义到执行的作用域链</span><br><span class="line">a defined     a.[[scope]]--&gt; <span class="number">0</span> : GO</span><br><span class="line">a.doing       a.[[scope]]--&gt; <span class="number">0</span> : aAO</span><br><span class="line">                             <span class="number">1</span> : GO</span><br><span class="line">                             </span><br><span class="line">b.defined     b.[[scope]]--&gt; <span class="number">0</span> : aAO</span><br><span class="line">                             <span class="number">1</span> : GO</span><br><span class="line">                             </span><br><span class="line">b.doing       b.[[scope]]--&gt; <span class="number">0</span> : bAO</span><br><span class="line">                             <span class="number">1</span> : aAO  </span><br><span class="line">                             <span class="number">2</span> : GO</span><br><span class="line">   </span><br><span class="line">c.defined     c.[[scope]]--&gt; <span class="number">0</span> : bAO</span><br><span class="line">                             <span class="number">1</span> : aAO  </span><br><span class="line">                             <span class="number">2</span> : GO</span><br><span class="line">                             </span><br><span class="line">c.doing       c.[[scope]]--&gt; <span class="number">0</span> : cAO</span><br><span class="line">                             <span class="number">1</span> : bAO  </span><br><span class="line">                             <span class="number">2</span> : aAO</span><br><span class="line">                             <span class="number">3</span> : GO</span><br></pre></td></tr></table></figure>
+<h4 id="闭包引子"><a href="#闭包引子" class="headerlink" title="闭包引子"></a><strong>闭包引子</strong></h4><p>一个函数执行完之后，需要销毁他的执行期上下文 也就是’AO’</p>
+<p>我们拿出上方一小段内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">a defined     a.[[scope]]--&gt; 0 : GO</span><br><span class="line">a.doing       a.[[scope]]--&gt; 0 : aAO</span><br><span class="line">                             1 : GO</span><br><span class="line">                             </span><br><span class="line">b.defined     b.[[scope]]--&gt; 0 : aAO</span><br><span class="line">                             1 : GO</span><br><span class="line">                             </span><br><span class="line">b.doing       b.[[scope]]--&gt; 0 : bAO</span><br><span class="line">                             1 : aAO  </span><br><span class="line">                             2 : GO</span><br></pre></td></tr></table></figure>
+<p>b.doing也就是b函数执行完之后，需要销毁他的执行期上下文，静静的等待下次执行，然后生成新的’AO’   那么a函数也是相同的道理</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">a defined     a.[[scope]]--&gt; 0 : GO</span><br><span class="line"></span><br><span class="line">a.doing       a.[[scope]]--&gt; (-0-:-a-A-O-)删去</span><br><span class="line">                             0 : GO</span><br><span class="line">                             </span><br><span class="line">b.doing       b.[[scope]]--&gt; (-0-:- b-A-O-)删去</span><br><span class="line">                             0 : aAO  </span><br><span class="line">                             1 : GO</span><br></pre></td></tr></table></figure>
+<p>这下麻烦大了，我们发现b函数的定义，是在a函数产生了’AO’之后发生的，但是函数运行完之后a函数把’AO’销毁，  那么b函数就彻底凉凉了</p>
+<h5 id="b函数的崛起"><a href="#b函数的崛起" class="headerlink" title="b函数的崛起"></a><strong>b函数的崛起</strong></h5><p>这时候，假如b函数不甘心，诶，纵身一跃，从a函数当中被保存了出来，保存到了a函数的外部，那么我们来看</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a defined     a.[[scope]]--&gt; 0 : GO</span><br><span class="line"></span><br><span class="line">b.doing       b.[[scope]]--&gt; 0 : aAO  </span><br><span class="line">                             1 : GO</span><br></pre></td></tr></table></figure>
+<p>b函数成功的被保留了下来， a函数已经把运行环境’AO’销毁了，但是我们发现，b函数当中竟然还继承着a函数的’aAO’ ,所以这个’aAO’ 并没有被完全销毁，a函数里的内容依然可以被访问，这时 ， oh my god ，一个闭包生成了。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">A</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">B</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> B;      <span class="comment">//华丽丽的把B保存出来，实现咸鱼翻身</span></span><br><span class="line">&#125;</span><br><span class="line">A();</span><br></pre></td></tr></table></figure>
+<p>欲知后事如何，请看下回，闭包详解。</p>
+<p>！</p>
+<hr>
+<p>资料参考 ： 渡一姬成老师JS精英课堂内容讲解 </p>
+<p>图片来源：<a href="https://dribbble.com/" target="_blank" rel="noopener">https://dribbble.com/</a></p>
+
+    </div>
+    
+        <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            
+                <span class="reward-type">
+                    <img class="wechat" src="http://ww4.sinaimg.cn/large/006tNc79ly1g390jolm8xj30fu0fn0un.jpg"><b>微信打赏</b>
+                </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">赞赏是不耍流氓的鼓励</p>
+</div>
+
+
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="https://chendongqing.github.io" target="_blank">勾陈的博客</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2019/05/07/Recursion&Preediting/" class="pre-post btn btn-default" title="JavaScript递归、预编译">
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">JavaScript递归、预编译</span>
+        </a>
+    
+    
+        <a href="/2019/04/25/Iterator&generator/" class="next-post btn btn-default" title="python迭代器/生成器">
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">python迭代器/生成器</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+	
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zMzA1MS85NjEz">
+  <script type="text/javascript">
+     (function(d, s) {
+         var j, e = d.getElementsByTagName(s)[0];
+         if (typeof LivereTower === 'function') { return; }
+         j = d.createElement(s);
+         j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+         j.async = true;
+         e.parentNode.insertBefore(j, e);
+     })(document, 'script');
+  </script>
+</div>
+
+
+    </div>
+
+
+
+
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">Table of Contents</h3>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#JavaScript作用域、作用域链"><span class="toc-text">JavaScript作用域、作用域链</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#因为每一个对象都可以有属性，有方法，-那么一切是对象的东西就可以有属性，函数也是一种特殊的对象，所以函数也有属性"><span class="toc-text">因为每一个对象都可以有属性，有方法，  那么一切是对象的东西就可以有属性，函数也是一种特殊的对象，所以函数也有属性</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#仔细说说-scope"><span class="toc-text">仔细说说[[scope]]</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#作用域链"><span class="toc-text">作用域链</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#上下文集合是神马"><span class="toc-text">上下文集合是神马</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#总结：每一个函数都有一个属于自己的执行期上下文集合，叫做作用域链，当我们正真在这个函数中访问一个变量的时候，一定要遵循这个函数所产生的作用域链去访问。"><span class="toc-text">总结：每一个函数都有一个属于自己的执行期上下文集合，叫做作用域链，当我们正真在这个函数中访问一个变量的时候，一定要遵循这个函数所产生的作用域链去访问。</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#闭包引子"><span class="toc-text">闭包引子</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#b函数的崛起"><span class="toc-text">b函数的崛起</span></a></li></ol></li></ol></li></ol>
+        
+    </div>
+</aside>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+        Total:
+        <strong id="busuanzi_value_site_pv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+        &nbsp; | &nbsp;
+        Visitors:
+        <strong id="busuanzi_value_site_uv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2019
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+</body>
+</html>

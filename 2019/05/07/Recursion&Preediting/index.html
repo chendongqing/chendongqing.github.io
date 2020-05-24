@@ -1,0 +1,431 @@
+<!DOCTYPE HTML>
+<html lang="python web">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="勾陈的博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://chendongqing.com">
+    <!--SEO-->
+
+    <meta name="keywords" content="JavaScript">
+
+
+    <meta name="description" content="JavaScript递归、预编译
+递归注意点：1， 找规律
+2， 找出口（递归一定要给出口，否则就是无限死循环）
+例！
+求一个数的阶乘第一步，找规律   ，求阶乘的规律，数学都学过，就是 n! ...">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+
+    <!--Title-->
+
+
+<title>JavaScript递归、预编译 | 勾陈的博客</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="勾陈的博客" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+	<div class="hide">
+		<script type="text/javascript">
+			var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+		</script>
+	</div>
+
+
+
+
+
+
+    
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header">
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title="勾陈">
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                <h2> 不积硅步 无以至千里 </h2>
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="http://chendongqing.com">勾陈的博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa icon1 iconn"></i>Home</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/前端/"><i class="fa icon2 iconn"></i>前端</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/后端/"><i class="fa icon3 iconn"></i>后端</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/书籍/"><i class="fa icon4 iconn"></i>书籍</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/工具/"><i class="fa icon5 iconn"></i>工具</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/archives/"><i class="fa icon6 iconn"></i>时间轴</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="JavaScript递归、预编译">
+            
+	            JavaScript递归、预编译
+            
+        </h1>
+        <div class="post-meta">
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/前端/">前端</a>
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-link" href="/tags/JavaScript/">JavaScript</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2019/05/07</span>
+        </span>
+        
+            <span class="fa-wrap">
+                <i class="fa fa-eye"></i>
+                <span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    
+</div>
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <h1 id="JavaScript递归、预编译"><a href="#JavaScript递归、预编译" class="headerlink" title="JavaScript递归、预编译"></a><strong>JavaScript递归、预编译</strong></h1><hr>
+<h4 id="递归"><a href="#递归" class="headerlink" title="递归"></a><strong>递归</strong></h4><h4 id="注意点："><a href="#注意点：" class="headerlink" title="注意点："></a><strong>注意点：</strong></h4><p>1， 找规律</p>
+<p>2， 找出口（递归一定要给出口，否则就是无限死循环）</p>
+<p>例！</p>
+<h5 id="求一个数的阶乘"><a href="#求一个数的阶乘" class="headerlink" title="求一个数的阶乘"></a><strong>求一个数的阶乘</strong></h5><p>第一步，找规律   ，求阶乘的规律，数学都学过，就是 n! = n * ( n - 1 )!</p>
+<p>那么我们就可以写一个求阶乘的函数了</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mul</span>(<span class="params">n</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> n * mul(n - <span class="number">1</span>);     其中mul(n<span class="number">-1</span>) 相当于(n<span class="number">-1</span>)!</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这时候我们已经把规律写进去了，还没有结束，我们需要给出口，如果没有出口，那就陷入了无限死循环当中。</p>
+<p>出口是什么呢？？   当n的阶乘或者0的阶乘时让结果等于1，，所以添加出口代码如下</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mul</span>(<span class="params">n</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(n==<span class="number">1</span> || n==<span class="number">0</span>)&#123;</span><br><span class="line">       <span class="keyword">return</span> <span class="number">1</span>；</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> n * mul(n - <span class="number">1</span>);     </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>作用</strong></p>
+<p>递归的解题方式只有一点好处，就是让我们的代码变得更加简洁，除此之外，再也没有任何好处</p>
+<p>递归并没有实现让代码运行变快，反而，递归是最慢的，如果对于一个特别复杂的程序，不能用递归，他会死在那  oh  die…</p>
+<p><strong>典型案例（斐波那契数列）</strong></p>
+<p>第一步，找规律       规律是每一个数，等于他前两个数相加的和。</p>
+<p>fb(n) = fb(n-1) + fb(n-2)       第n位的值等于第(n-1)位+第(n-2)位的和</p>
+<p>函数式：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fb</span>(<span class="params">n</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">return</span> fb(n) = fb(n<span class="number">-1</span>) + fb(n<span class="number">-2</span>); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接下来，为函数找出口：   当n等于1 或者n等于2的时候，获得最开始的两个数1。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fb</span>(<span class="params">n</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(n==<span class="number">1</span>||n==<span class="number">2</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">	<span class="keyword">return</span> fb(n) = fb(n<span class="number">-1</span>) + fb(n<span class="number">-2</span>); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><span style="color:red">小技巧：有递归，第一步就写return ,有return，就在后面把规律写上</span></p>
+<h4 id="预编译"><a href="#预编译" class="headerlink" title="预编译"></a><strong>预编译</strong></h4><p>js代码运行分为三部</p>
+<p>1、语法分析</p>
+<p>2、<span style="color:blue">预编译</span></p>
+<p>3、解释执行</p>
+<p>因为js代码是解释性语言，所以代码在执行的时候，一定是解释一句，执行一句。但是，在执行之前，系统一定会把所有的js代码扫描一遍，看一看有没有低级的语法错误，（比如有没有少分号，大括号）等等，这个通篇扫描，就是语法分析的过程。</p>
+<p>通篇扫描之后，就进入了预编译了，预编译是干啥的嘞？？？</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'a'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这段代码毫无疑问，是可以执行的，那下方我们再看</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">test();</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'a'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>按理说，解释性语言，从上到下一句一句翻译，那么这段代码是报错的，因为函数还未定义，我们就去调用了他，但是结果很意外，这段代码依旧可以执行，这是为啥嘞？                                    —————就是因为预编译</p>
+<p>再往下看</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">8</span>;</span><br><span class="line"><span class="built_in">console</span>.log(a);</span><br></pre></td></tr></table></figure>
+<p>这段代码肯定没问题，运行结果为 8</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(a);</span><br><span class="line"><span class="keyword">var</span> a = <span class="number">8</span>;</span><br></pre></td></tr></table></figure>
+<p>这样书写呢，就出现问题了，会在控制台打印    undefined    ，接着再往下看</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(a);</span><br></pre></td></tr></table></figure>
+<p>不定义a变量，就在控制台打印，变量未声明就使用，结果是会报错，a is  not defined</p>
+<p>这些都是预编译产生的特殊的效果。</p>
+<p>总结成两句话1，函数声明整体提升  2，变量    只有声明提升   （可能还不太懂，我们来详细解释一下）</p>
+<h5 id="函数声明提升"><a href="#函数声明提升" class="headerlink" title="函数声明提升"></a><strong>函数声明提升</strong></h5><p>函数在声明的时候，无论他被写在哪个位置，他一定会被提升到最前面，包括他自己里面的函数体内容</p>
+<h5 id="变量提升"><a href="#变量提升" class="headerlink" title="变量提升"></a><strong>变量提升</strong></h5><p>我们在声明变量的时候   var a = 8;    其实是两段代码， 1，var a (声明a)  2，a=8(赋值)，   一定要记住，在这里只把声明提升，也就是 var a 提升 ，而 a=8 的赋值是不提升的，留在原来的位置</p>
+<p><span style="color:green">当然，这只是最简单的原理，只能解决一小部分问题,ps基本上啥问题也解决不了，重点在下头</span></p>
+<h4 id="重点来了："><a href="#重点来了：" class="headerlink" title="重点来了： "></a><strong>重点来了： </strong></h4><p>先来点简单的知识铺垫</p>
+<ol>
+<li><p>imply global   这玩意叫做 ‘暗示全局变量’，是啥意思呢，就是，任何变量未经声明就进行了赋值，那么此变量归全局变量所有     </p>
+<p>例如：   a = 8;     </p>
+<p>​               ——&gt;  window.a = 8 ;</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">c</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> a = b = <span class="number">100</span>;</span><br><span class="line">&#125;</span><br><span class="line">这时候 b 就是全局变量     <span class="built_in">window</span>.b 的值为<span class="number">100</span> ，而a是局部变量</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol start="2">
+<li>全局上的变量  ，即使声明了 ，也归window 所有。    </li>
+</ol>
+<p>总结：  window就是全局的域，这一块竟然需要了解作用域…</p>
+<h5 id="预编译需要干哪些事呢"><a href="#预编译需要干哪些事呢" class="headerlink" title="预编译需要干哪些事呢"></a><strong>预编译需要干哪些事呢</strong></h5><p>四步走： </p>
+<ol>
+<li><p>第一步， 创建AO对象         (activation object活跃对象)</p>
+</li>
+<li><p>第二步，找形参和变量声明，将变量和形参名作为AO属性名，值为undefined</p>
+</li>
+<li><p>第三部，将实参值和形参统一</p>
+</li>
+<li><p>第四部，在函数体里找到函数声明，把函数名，当作AO对象的属性名，函数体当值。</p>
+</li>
+</ol>
+<p><span style="color:skyblue">这个AO就厉害了， 他是啥，他叫做执行期上下文，也叫做作用域</span></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params">a</span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(a);</span><br><span class="line">    <span class="keyword">var</span> a = <span class="number">123</span>;</span><br><span class="line">    <span class="built_in">console</span>.log(a);</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">    <span class="built_in">console</span>.log(a);</span><br><span class="line">    <span class="keyword">var</span> b = <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">    <span class="built_in">console</span>.log(b);</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">d</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">&#125;fn(<span class="number">1</span>)</span><br><span class="line"><span class="comment">//预编译发生在函数执行的前一刻</span></span><br></pre></td></tr></table></figure>
+<p>接下来我们来看，在这个函数运行前，第一步会生成一个AO， 然后根据四步走第二步</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">AO&#123;</span><br><span class="line">	a : undefined        // 所有的形参，和变量声明放进来，只取一次</span><br><span class="line">	b : undefined    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接下来第三部，把实参和形参统一 ，注意一下，实参为fn(1) 里面的1</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">AO&#123;</span><br><span class="line">	a : 1       </span><br><span class="line">	b : undefined    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最后是第四步，在函数体里找函数声明，  有1.( function a(){} )    2.( function d(){} )      在这里注意， var b = function (){}    是表达式，不是函数声明</p>
+<p>接下来把 函数声明的函数名，当作AO对象的属性名 ，挂起</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">AO&#123;</span><br><span class="line">	a : 1           //因为有过a了，所以不再另创建a</span><br><span class="line">	b : undefined   </span><br><span class="line">    d : </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>挂上了之后，把整个函数体，挂到相应的 AO属性上去，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">AO&#123;</span><br><span class="line">	a : function a()&#123;&#125;          </span><br><span class="line">	b : undefined   </span><br><span class="line">    d : function d()&#123;&#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这就是预编译做的事了，那么代码运行结果为</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params">a</span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(a);</span><br><span class="line">    <span class="keyword">var</span> a = <span class="number">123</span>;</span><br><span class="line">    <span class="built_in">console</span>.log(a);</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">    <span class="built_in">console</span>.log(a);</span><br><span class="line">    <span class="keyword">var</span> b = <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">    <span class="built_in">console</span>.log(b);</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">d</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">&#125;fn(<span class="number">1</span>)</span><br><span class="line"><span class="comment">//预编译发生在函数执行的前一刻</span></span><br><span class="line"><span class="comment">//  function a()&#123;&#125; </span></span><br><span class="line"><span class="comment">//  123</span></span><br><span class="line"><span class="comment">//  123</span></span><br><span class="line"><span class="comment">//  function ()&#123;&#125;</span></span><br></pre></td></tr></table></figure>
+<h5 id="练习巩固"><a href="#练习巩固" class="headerlink" title="练习巩固"></a><strong>练习巩固</strong></h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params">a,b</span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(a);</span><br><span class="line">	<span class="built_in">console</span>.log(b);</span><br><span class="line">    <span class="keyword">var</span> b = <span class="number">234</span>;</span><br><span class="line">    <span class="built_in">console</span>.log(b);</span><br><span class="line">    a = <span class="number">123</span>;</span><br><span class="line">    <span class="built_in">console</span>.log(a);</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">a</span> (<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">    <span class="keyword">var</span> a;</span><br><span class="line">    b = <span class="number">234</span>;</span><br><span class="line">    <span class="keyword">var</span> b = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">    <span class="built_in">console</span>.log(a);</span><br><span class="line">    <span class="built_in">console</span>.log(b);</span><br><span class="line">&#125; test(<span class="number">1</span>);</span><br><span class="line"><span class="comment">//首先第一步，生成 AO</span></span><br><span class="line">AO&#123;    &#125;</span><br><span class="line"><span class="comment">//第二步，找形参和变量声明，将变量和形参名作为AO属性名，值为undefined</span></span><br><span class="line">AO&#123;</span><br><span class="line">    a : <span class="literal">undefined</span>,</span><br><span class="line">    b : <span class="literal">undefined</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//第三步，将实参值和形参统一</span></span><br><span class="line">AO&#123;</span><br><span class="line">    a : <span class="number">1</span>,</span><br><span class="line">    b : <span class="literal">undefined</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//第四步，在函数体里找到函数声明，把函数名，当作AO对象的属性名，函数体当值。</span></span><br><span class="line">AO&#123;</span><br><span class="line">    a : <span class="function"><span class="keyword">function</span> <span class="title">a</span> (<span class="params"></span>)</span>&#123;&#125;,</span><br><span class="line">    b : <span class="literal">undefined</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">所以输出结果为</span><br><span class="line"><span class="comment">//function a()&#123;&#125;</span></span><br><span class="line"><span class="comment">//undefined</span></span><br><span class="line"><span class="comment">//234</span></span><br><span class="line"><span class="comment">//123</span></span><br><span class="line"><span class="comment">//123</span></span><br><span class="line"><span class="comment">//function()&#123;&#125;</span></span><br></pre></td></tr></table></figure>
+<h4 id="竟然还有知识点-：-GO"><a href="#竟然还有知识点-：-GO" class="headerlink" title="竟然还有知识点  ： GO"></a><strong>竟然还有知识点  ： GO</strong></h4><p>当初埋了一个坑</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">var</span> a = b = <span class="number">123</span>;</span><br><span class="line">    <span class="built_in">console</span>.log( <span class="built_in">window</span>.b );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们知道b是全局变量，b就不在a的AO当中，他在哪里呢，他应当在GO当中</p>
+<p>这个GO是啥玩意， GO就是全局执行前的执行上下文，我把他理解为AO的老母亲，一定是先生成GO，有了全局环境，再之后才有的AO。函数运行时，会先从自己的AO中拿值，如果没有，再去GO，也就是全局环境中找</p>
+<p>接下来来个恶心的例子:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">global = <span class="number">100</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(global);</span><br><span class="line">    global = <span class="number">200</span>;</span><br><span class="line">    <span class="built_in">console</span>.log(global);</span><br><span class="line">    <span class="keyword">var</span> global = <span class="number">300</span>；</span><br><span class="line">&#125;</span><br><span class="line">test()</span><br><span class="line"><span class="keyword">var</span> global;</span><br><span class="line"></span><br><span class="line"><span class="comment">//首先看GO</span></span><br><span class="line">GO&#123;</span><br><span class="line">    global:<span class="number">100</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//然后看AO</span></span><br><span class="line">AO&#123;</span><br><span class="line">     global:<span class="literal">undefined</span></span><br><span class="line">&#125;</span><br><span class="line">所以答案是</span><br><span class="line"><span class="comment">//undefine</span></span><br><span class="line"><span class="comment">//200</span></span><br></pre></td></tr></table></figure>
+<p>这个故事告诉我们，有自己的一定先用自己的， ，然后再去找全局。</p>
+<h5 id="最后再来一道题巩固一下"><a href="#最后再来一道题巩固一下" class="headerlink" title="最后再来一道题巩固一下"></a><strong>最后再来一道题巩固一下</strong></h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">a = <span class="number">100</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">demo</span>(<span class="params">e</span>)</span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">e</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">    <span class="built_in">arguments</span>[<span class="number">0</span>] = <span class="number">2</span>;</span><br><span class="line">    <span class="built_in">console</span>,log(e);</span><br><span class="line">    <span class="keyword">if</span>(a)&#123;</span><br><span class="line">        <span class="keyword">var</span> b = <span class="number">123</span></span><br><span class="line">    &#125;</span><br><span class="line">    a = <span class="number">10</span>;</span><br><span class="line">    <span class="keyword">var</span> a;</span><br><span class="line">    <span class="built_in">console</span>.log(b);</span><br><span class="line">    f=<span class="number">123</span></span><br><span class="line">    <span class="built_in">console</span>.log(a)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> a;</span><br><span class="line">demo(<span class="number">1</span>);</span><br><span class="line"><span class="built_in">console</span>.log(a);</span><br><span class="line"><span class="built_in">console</span>.log(f);</span><br></pre></td></tr></table></figure>
+<p>解题：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">//第一步生成GO</span><br><span class="line">G0&#123;</span><br><span class="line">	a : undefined,</span><br><span class="line">	demo : function()&#123;&#125;,</span><br><span class="line">	f : undefined</span><br><span class="line">&#125;</span><br><span class="line">//第二步开始运行，a在GO中改为100.  运行到demo(1)</span><br><span class="line">G0&#123;</span><br><span class="line">	a : 100,</span><br><span class="line">	demo : function()&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line">//运行到demo(1)  生成demo函数的AO</span><br><span class="line">A0&#123;</span><br><span class="line">	e : undefined,</span><br><span class="line">	b : undefined,</span><br><span class="line">	a : undefined</span><br><span class="line">&#125;</span><br><span class="line">//想一想，重要四部曲里的，第三步，把形参实参统一</span><br><span class="line">A0&#123;</span><br><span class="line">	e : 1,</span><br><span class="line">	b : undefined,</span><br><span class="line">	a : undefined</span><br><span class="line">&#125;</span><br><span class="line">//重要四部曲里的，第四步，把函数体赋值给属性</span><br><span class="line">A0&#123;</span><br><span class="line">	e : function e()&#123;&#125;,</span><br><span class="line">	b : undefined,</span><br><span class="line">	a : undefined</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>答题：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//根据demo()的作用域链来看</span></span><br><span class="line">G0&#123;</span><br><span class="line">	a : <span class="literal">undefined</span>,</span><br><span class="line">	demo : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;,</span><br><span class="line">	f : <span class="literal">undefined</span></span><br><span class="line">&#125;</span><br><span class="line">A0&#123;</span><br><span class="line">	e : <span class="function"><span class="keyword">function</span> <span class="title">e</span>(<span class="params"></span>)</span>&#123;&#125;,</span><br><span class="line">	b : <span class="literal">undefined</span>,</span><br><span class="line">	a : <span class="literal">undefined</span></span><br><span class="line">&#125;</span><br><span class="line">---------------------------------------------------------</span><br><span class="line">a = <span class="number">100</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">demo</span>(<span class="params">e</span>)</span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">e</span>(<span class="params"></span>)</span>&#123;&#125;            </span><br><span class="line">    <span class="built_in">arguments</span>[<span class="number">0</span>] = <span class="number">2</span>;    <span class="comment">//在这里考察的是实参列表和传参形参位的引用关系,你变我也变,所以在这里把e的值由函数改为了2</span></span><br><span class="line">    <span class="built_in">console</span>.log(e);      <span class="comment">// 2</span></span><br><span class="line">    <span class="keyword">if</span>(a)&#123;               <span class="comment">//取自己AO的a,为undefined,所以不进入if语句，b的赋值无效</span></span><br><span class="line">        <span class="keyword">var</span> b = <span class="number">123</span></span><br><span class="line">    &#125;</span><br><span class="line">    a = <span class="number">10</span>;           </span><br><span class="line">    <span class="keyword">var</span> a;</span><br><span class="line">    <span class="built_in">console</span>.log(b);  <span class="comment">//取自己AO中b的值，为  undefined</span></span><br><span class="line">    f=<span class="number">123</span></span><br><span class="line">    <span class="built_in">console</span>.log(a)   <span class="comment">//10</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> a;</span><br><span class="line">demo(<span class="number">1</span>);</span><br><span class="line"><span class="built_in">console</span>.log(a);    <span class="comment">//100</span></span><br><span class="line"><span class="built_in">console</span>.log(f);    <span class="comment">//123</span></span><br><span class="line">---------------------------------------------------------</span><br><span class="line"><span class="comment">// 2</span></span><br><span class="line"><span class="comment">// undefined</span></span><br><span class="line"><span class="comment">// 10</span></span><br><span class="line"><span class="comment">// 100</span></span><br><span class="line"><span class="comment">// 123</span></span><br></pre></td></tr></table></figure>
+<p>预编译所发生的所有的事，都可以根据上面所说的，四部曲走，就没错了，一定要背住这四步，以后对于函数的执行顺序，就没有任何疑问了！</p>
+<p>预编译学习完了，当然还要学习作用域和作用域链的知识，一起看一下吧</p>
+<p><a href="https://chendongqing.github.io/2019/05/01/Scope&amp;ScopeChain/" target="_blank" rel="noopener">Scope&amp;ScopeChain | 作用域 &amp;作用域链</a></p>
+<hr>
+<p>资料参考 ： 渡一姬成老师JS精英课堂内容讲解 </p>
+<p>图片来源：<a href="https://dribbble.com/" target="_blank" rel="noopener">https://dribbble.com/</a></p>
+
+    </div>
+    
+        <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            
+                <span class="reward-type">
+                    <img class="wechat" src="http://ww4.sinaimg.cn/large/006tNc79ly1g390jolm8xj30fu0fn0un.jpg"><b>微信打赏</b>
+                </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">赞赏是不耍流氓的鼓励</p>
+</div>
+
+
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="https://chendongqing.github.io" target="_blank">勾陈的博客</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2019/05/13/closure/" class="pre-post btn btn-default" title="JavaScript闭包">
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">JavaScript闭包</span>
+        </a>
+    
+    
+        <a href="/2019/05/01/Scope&ScopeChain/" class="next-post btn btn-default" title="JavaScript作用域、作用域链">
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">JavaScript作用域、作用域链</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+	
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zMzA1MS85NjEz">
+  <script type="text/javascript">
+     (function(d, s) {
+         var j, e = d.getElementsByTagName(s)[0];
+         if (typeof LivereTower === 'function') { return; }
+         j = d.createElement(s);
+         j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+         j.async = true;
+         e.parentNode.insertBefore(j, e);
+     })(document, 'script');
+  </script>
+</div>
+
+
+    </div>
+
+
+
+
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">Table of Contents</h3>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#JavaScript递归、预编译"><span class="toc-text">JavaScript递归、预编译</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#递归"><span class="toc-text">递归</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#注意点："><span class="toc-text">注意点：</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#求一个数的阶乘"><span class="toc-text">求一个数的阶乘</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#预编译"><span class="toc-text">预编译</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#函数声明提升"><span class="toc-text">函数声明提升</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#变量提升"><span class="toc-text">变量提升</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#重点来了："><span class="toc-text">重点来了： </span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#预编译需要干哪些事呢"><span class="toc-text">预编译需要干哪些事呢</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#练习巩固"><span class="toc-text">练习巩固</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#竟然还有知识点-：-GO"><span class="toc-text">竟然还有知识点  ： GO</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#最后再来一道题巩固一下"><span class="toc-text">最后再来一道题巩固一下</span></a></li></ol></li></ol></li></ol>
+        
+    </div>
+</aside>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+        Total:
+        <strong id="busuanzi_value_site_pv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+        &nbsp; | &nbsp;
+        Visitors:
+        <strong id="busuanzi_value_site_uv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2019
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+</body>
+</html>

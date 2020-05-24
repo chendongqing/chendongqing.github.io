@@ -1,0 +1,358 @@
+<!DOCTYPE HTML>
+<html lang="python web">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="勾陈的博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://chendongqing.com">
+    <!--SEO-->
+
+    <meta name="keywords" content="python">
+
+
+    <meta name="description" content="python装饰器（语法糖）
+定义:本质上是函数，作用于（装饰其他函数）为其他函数添加附加功能例：把人比作是一个函数，这个函数具有很多功能，会吃会睡会抽烟喝酒烫头，现在我们需要添加一个装饰器，用...">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+
+    <!--Title-->
+
+
+<title>python装饰器 | 勾陈的博客</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="勾陈的博客" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+	<div class="hide">
+		<script type="text/javascript">
+			var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+		</script>
+	</div>
+
+
+
+
+
+
+    
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header">
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title="勾陈">
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                <h2> 不积硅步 无以至千里 </h2>
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="http://chendongqing.com">勾陈的博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa icon1 iconn"></i>Home</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/前端/"><i class="fa icon2 iconn"></i>前端</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/后端/"><i class="fa icon3 iconn"></i>后端</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/书籍/"><i class="fa icon4 iconn"></i>书籍</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/工具/"><i class="fa icon5 iconn"></i>工具</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/archives/"><i class="fa icon6 iconn"></i>时间轴</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="python装饰器">
+            
+	            python装饰器
+            
+        </h1>
+        <div class="post-meta">
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/后端/">后端</a>
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-link" href="/tags/python/">python</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2019/04/18</span>
+        </span>
+        
+            <span class="fa-wrap">
+                <i class="fa fa-eye"></i>
+                <span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    
+</div>
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <h1 id="python装饰器（语法糖）"><a href="#python装饰器（语法糖）" class="headerlink" title="python装饰器（语法糖）"></a><strong>python装饰器（语法糖）</strong></h1><hr>
+<h4 id="定义-本质上是函数，作用于（装饰其他函数）为其他函数添加附加功能"><a href="#定义-本质上是函数，作用于（装饰其他函数）为其他函数添加附加功能" class="headerlink" title="定义:本质上是函数，作用于（装饰其他函数）为其他函数添加附加功能"></a><strong>定义:本质上是函数，作用于（装饰其他函数）为其他函数添加附加功能</strong></h4><p>例：把人比作是一个函数，这个函数具有很多功能，会吃会睡会抽烟喝酒烫头，现在我们需要添加一个装饰器，用来装饰这个函数，给人这个函数添加一对小翅膀，那么他就会新的技能了</p>
+<h4 id="原则-——1-不能修改被装饰函数的源代码-——2-不能修改被装饰函数的调用方式"><a href="#原则-——1-不能修改被装饰函数的源代码-——2-不能修改被装饰函数的调用方式" class="headerlink" title="原则:  ——1.不能修改被装饰函数的源代码 ——2.不能修改被装饰函数的调用方式"></a><strong>原则:  ——1.不能修改被装饰函数的源代码 ——2.不能修改被装饰函数的调用方式</strong></h4><h4 id="知识储备：——-1-函数即是”变量”——2-高阶函数——3-嵌套函数"><a href="#知识储备：——-1-函数即是”变量”——2-高阶函数——3-嵌套函数" class="headerlink" title="知识储备：—— 1.函数即是”变量”——2.高阶函数——3.嵌套函数"></a><strong>知识储备：—— 1.函数即是”变量”——2.高阶函数——3.嵌套函数</strong></h4><h6 id="1-函数即是变量"><a href="#1-函数即是变量" class="headerlink" title="1.函数即是变量"></a><strong>1.函数即是变量</strong></h6><h6 id="2-高阶函数"><a href="#2-高阶函数" class="headerlink" title="2.高阶函数"></a><strong>2.高阶函数</strong></h6><ul>
+<li><p>把一个函数名当作实参传给另一个函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fly</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">" I can fly"</span>)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test1</span><span class="params">(func)</span>:</span>             <span class="comment"># func = fly</span></span><br><span class="line">    print(<span class="string">"函数自己的功能"</span>)     </span><br><span class="line">    func()                   <span class="comment"># func() = fly()</span></span><br><span class="line">test1(fly)</span><br><span class="line"><span class="comment"># 结果：   函数自己的功能    I can fly</span></span><br><span class="line"><span class="comment">#虽然实现了添加新功能，但是函数调用方式发生变化，违背装饰器原则</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>返回值中包含函数名</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fly</span><span class="params">()</span>:</span></span><br><span class="line">	print(<span class="string">" I can fly"</span>)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test2</span><span class="params">(func)</span>:</span>             <span class="comment"># func = fly</span></span><br><span class="line">    print(<span class="string">"函数自己的功能"</span>)</span><br><span class="line">    <span class="keyword">return</span> func              <span class="comment">#返回fly的地址</span></span><br><span class="line">fly=test2(fly) 	             <span class="comment">#返回的fly地址保存在申明新变量fly中(覆盖)</span></span><br><span class="line">fly()</span><br><span class="line"><span class="comment"># 结果：   函数自己的功能    I can fly</span></span><br><span class="line"><span class="comment">#可以做到不修改函数的调用方式</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h6 id="3-嵌套函数"><a href="#3-嵌套函数" class="headerlink" title="3.嵌套函数"></a><strong>3.嵌套函数</strong></h6><ul>
+<li><p>必须在函数里 def新函数才是嵌套，否则是调用</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test2</span><span class="params">()</span>:</span>			<span class="comment">#函数的调用</span></span><br><span class="line">       <span class="keyword">pass</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test1</span><span class="params">()</span>:</span>			</span><br><span class="line">	test2()</span><br><span class="line">test1()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test1</span><span class="params">()</span>:</span>			<span class="comment">#函数的嵌套</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test2</span><span class="params">()</span>:</span></span><br><span class="line">       <span class="keyword">pass</span></span><br><span class="line">	test2()</span><br><span class="line">test1()</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<h4 id="装饰器详解：-高阶函数-嵌套函数-》-装饰器"><a href="#装饰器详解：-高阶函数-嵌套函数-》-装饰器" class="headerlink" title="装饰器详解： 高阶函数 + 嵌套函数  =》 装饰器"></a><strong>装饰器详解： 高阶函数 + 嵌套函数  =》 装饰器</strong></h4><p>情景一：尝试利用高阶函数实现装饰器</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">login</span><span class="params">(func)</span>:</span>                 </span><br><span class="line">    <span class="keyword">return</span> qq                     <span class="comment">#直接返回qq地址</span></span><br><span class="line">    print(<span class="string">"登陆验证"</span>)              <span class="comment">#新功能添加失败</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">qq</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">"欢迎使用QQ登陆"</span>)</span><br><span class="line">qq = login(qq)</span><br><span class="line">qq()</span><br><span class="line"><span class="comment">#结果：   欢迎使用QQ登陆</span></span><br><span class="line"><span class="comment">#出现问题：必须满足高阶函数，返回值包含函数名条件</span></span><br></pre></td></tr></table></figure>
+<p>情景二：利用高阶函数+嵌套函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">login</span><span class="params">(func)</span>:</span>             <span class="comment">#func =》 qq</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">inner</span><span class="params">()</span>:</span>             <span class="comment">#第一次进入时，inner函数只定义，不运行，</span></span><br><span class="line">        print(<span class="string">"登陆验证"</span>)     </span><br><span class="line">        func()</span><br><span class="line">    <span class="keyword">return</span> inner             <span class="comment">#直接返回inner函数地址，这时qq=》inner函数地址</span></span><br><span class="line"><span class="meta">@login                       #在python中可以用‘@’符号表示添加装饰器,等价于（qq = login(qq)）</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">qq</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">"欢迎使用QQ登陆"</span>)</span><br><span class="line">qq()               <span class="comment">#qq() =》inner() ，执行 新功能代码和func(),这时看回第一行func=&gt;qq</span></span><br><span class="line"><span class="comment">#结果： 登陆验证    欢迎使用QQ登陆</span></span><br><span class="line"><span class="comment">#最简单的装饰器成立</span></span><br></pre></td></tr></table></figure>
+<p>情景三： 基础版装饰器  – (适用于70%场景)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">username,password = <span class="string">'cdq'</span>,<span class="string">'123456'</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">login</span><span class="params">(func)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">inner</span><span class="params">(*args,**kwargs)</span>:</span></span><br><span class="line">        user_name = input(<span class="string">"Username："</span>).strip()</span><br><span class="line">        pass_word = input(<span class="string">"Password："</span>).strip()</span><br><span class="line">        <span class="keyword">if</span> user_name == username <span class="keyword">and</span> pass_word == password:</span><br><span class="line">            print(<span class="string">"验证成功，欢迎您"</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            exit(<span class="string">"验证失败，用户名或密码错误"</span>)</span><br><span class="line">        func(*args,**kwargs)</span><br><span class="line">    <span class="keyword">return</span> inner</span><br><span class="line"><span class="meta">@login                                #qq() =》inner()</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">qq</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">"欢迎使用QQ登陆"</span>)</span><br><span class="line"><span class="meta">@login	                              #weixin() =》inner()</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">weixin</span><span class="params">()</span>:</span>		</span><br><span class="line">    print(<span class="string">"欢迎使用weixin登陆"</span>)</span><br><span class="line">qq()</span><br><span class="line">weixin()</span><br></pre></td></tr></table></figure>
+<h4 id="升级版装饰器"><a href="#升级版装饰器" class="headerlink" title="升级版装饰器"></a><strong>升级版装饰器</strong></h4><p>利用装饰器添加不同验证方式的验证</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">username,password = <span class="string">'cdq'</span>,<span class="string">'123456'</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">login</span><span class="params">(login_type)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">outer</span><span class="params">(func)</span>:</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">inner</span><span class="params">(*args,**kwargs)</span>:</span></span><br><span class="line">            <span class="keyword">if</span> login_type == <span class="string">'weixin'</span>:</span><br><span class="line">                user_name = input(<span class="string">"Username："</span>).strip()</span><br><span class="line">                pass_word = input(<span class="string">"Password："</span>).strip()</span><br><span class="line">                <span class="keyword">if</span> user_name == username <span class="keyword">and</span> pass_word == password:</span><br><span class="line">                    print(<span class="string">"验证成功，欢迎您"</span>)</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    exit(<span class="string">"验证失败，用户名或密码错误"</span>)</span><br><span class="line">                <span class="keyword">return</span> func(*args,**kwargs)</span><br><span class="line">            <span class="keyword">elif</span> login_type == <span class="string">'qq'</span>:</span><br><span class="line">                print(<span class="string">"抱歉，只能微信验证"</span>)</span><br><span class="line">        <span class="keyword">return</span> inner</span><br><span class="line">    <span class="keyword">return</span> outer</span><br><span class="line"><span class="meta">@login(login_type="qq")</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">qq</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">"欢迎使用QQ登陆"</span>)</span><br><span class="line"><span class="meta">@login(login_type="weixin")</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">weixin</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">"欢迎使用weixin登陆"</span>)</span><br><span class="line"><span class="comment"># qq()</span></span><br><span class="line">weixin()</span><br></pre></td></tr></table></figure>
+<h4 id="注意：当weixin-中有返回值时，装饰器无返回值场景"><a href="#注意：当weixin-中有返回值时，装饰器无返回值场景" class="headerlink" title="注意：当weixin()中有返回值时，装饰器无返回值场景"></a><strong>注意：当weixin()中有返回值时，装饰器无返回值场景</strong></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">username,password = <span class="string">'cdq'</span>,<span class="string">'123456'</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">login</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">outer</span><span class="params">(func)</span>:</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">inner</span><span class="params">(*args,**kwargs)</span>:</span></span><br><span class="line">                user_name = input(<span class="string">"Username："</span>).strip()</span><br><span class="line">                pass_word = input(<span class="string">"Password："</span>).strip()</span><br><span class="line">                <span class="keyword">if</span> user_name == username <span class="keyword">and</span> pass_word == password:</span><br><span class="line">                    print(<span class="string">"验证成功，欢迎您"</span>)</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    exit(<span class="string">"验证失败，用户名或密码错误"</span>)</span><br><span class="line">                func(*args,**kwargs)</span><br><span class="line">        <span class="keyword">return</span> inner</span><br><span class="line">    <span class="keyword">return</span> outer</span><br><span class="line"><span class="meta">@login()</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">weixin</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">"欢迎使用weixin登陆"</span>)</span><br><span class="line">    <span class="keyword">return</span>(<span class="string">"name"</span>,<span class="string">"age"</span>)                  <span class="comment">#有返回值</span></span><br><span class="line">print(weixin())</span><br><span class="line"><span class="comment">#结果： 验证成功，欢迎您    欢迎使用weixin登陆      None</span></span><br></pre></td></tr></table></figure>
+<p>解决：第十一行添加return，返回结果值</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">username,password = <span class="string">'cdq'</span>,<span class="string">'123456'</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">login</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">outer</span><span class="params">(func)</span>:</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">inner</span><span class="params">(*args,**kwargs)</span>:</span></span><br><span class="line">                user_name = input(<span class="string">"Username："</span>).strip()</span><br><span class="line">                pass_word = input(<span class="string">"Password："</span>).strip()</span><br><span class="line">                <span class="keyword">if</span> user_name == username <span class="keyword">and</span> pass_word == password:</span><br><span class="line">                    print(<span class="string">"验证成功，欢迎您"</span>)</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    exit(<span class="string">"验证失败，用户名或密码错误"</span>)</span><br><span class="line">                <span class="keyword">return</span> func(*args,**kwargs)           <span class="comment">#!!!!!!!</span></span><br><span class="line">        <span class="keyword">return</span> inner</span><br><span class="line">    <span class="keyword">return</span> outer</span><br><span class="line"><span class="meta">@login()</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">weixin</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">"欢迎使用weixin登陆"</span>)</span><br><span class="line">    <span class="keyword">return</span>(<span class="string">"name"</span>,<span class="string">"age"</span>)</span><br><span class="line">print(weixin())</span><br><span class="line"><span class="comment">#结果： 验证成功，欢迎您    欢迎使用weixin登陆    ('name', 'age')</span></span><br></pre></td></tr></table></figure>
+<h4 id="拓展：functools-wraps"><a href="#拓展：functools-wraps" class="headerlink" title="拓展：functools.wraps"></a><strong>拓展</strong>：<strong>functools.wraps</strong></h4><p>上述的装饰器虽然已经完成了其应有的功能，即：装饰器内的函数代指了原函数，注意其只是代指而非相等，原函数的‘元信息’没有被赋值到装饰器函数内部。例如：<strong>函数的注释信息</strong>等</p>
+<p>使用方法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> functools</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">outer</span><span class="params">(func)</span>:</span></span><br><span class="line"><span class="meta">    @functools.wraps(func)</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">inner</span><span class="params">(*args, **kwargs)</span>:</span></span><br><span class="line">        print(inner.__doc__)  <span class="comment"># None</span></span><br><span class="line">        <span class="keyword">return</span> func()</span><br><span class="line">    <span class="keyword">return</span> inner</span><br><span class="line"><span class="meta">@outer</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">function</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">    我是注释</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    print(<span class="string">'function'</span>)</span><br><span class="line">function()</span><br></pre></td></tr></table></figure>
+
+    </div>
+    
+        <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            
+                <span class="reward-type">
+                    <img class="wechat" src="http://ww4.sinaimg.cn/large/006tNc79ly1g390jolm8xj30fu0fn0un.jpg"><b>微信打赏</b>
+                </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">赞赏是不耍流氓的鼓励</p>
+</div>
+
+
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="https://chendongqing.github.io" target="_blank">勾陈的博客</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2019/04/25/Iterator&generator/" class="pre-post btn btn-default" title="python迭代器/生成器">
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">python迭代器/生成器</span>
+        </a>
+    
+    
+</div>
+
+
+    <div id="comments">
+        
+	
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zMzA1MS85NjEz">
+  <script type="text/javascript">
+     (function(d, s) {
+         var j, e = d.getElementsByTagName(s)[0];
+         if (typeof LivereTower === 'function') { return; }
+         j = d.createElement(s);
+         j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+         j.async = true;
+         e.parentNode.insertBefore(j, e);
+     })(document, 'script');
+  </script>
+</div>
+
+
+    </div>
+
+
+
+
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">Table of Contents</h3>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#python装饰器（语法糖）"><span class="toc-text">python装饰器（语法糖）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#定义-本质上是函数，作用于（装饰其他函数）为其他函数添加附加功能"><span class="toc-text">定义:本质上是函数，作用于（装饰其他函数）为其他函数添加附加功能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#原则-——1-不能修改被装饰函数的源代码-——2-不能修改被装饰函数的调用方式"><span class="toc-text">原则:  ——1.不能修改被装饰函数的源代码 ——2.不能修改被装饰函数的调用方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#知识储备：——-1-函数即是”变量”——2-高阶函数——3-嵌套函数"><span class="toc-text">知识储备：—— 1.函数即是”变量”——2.高阶函数——3.嵌套函数</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#1-函数即是变量"><span class="toc-text">1.函数即是变量</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#2-高阶函数"><span class="toc-text">2.高阶函数</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3-嵌套函数"><span class="toc-text">3.嵌套函数</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#装饰器详解：-高阶函数-嵌套函数-》-装饰器"><span class="toc-text">装饰器详解： 高阶函数 + 嵌套函数  =》 装饰器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#升级版装饰器"><span class="toc-text">升级版装饰器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#注意：当weixin-中有返回值时，装饰器无返回值场景"><span class="toc-text">注意：当weixin()中有返回值时，装饰器无返回值场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#拓展：functools-wraps"><span class="toc-text">拓展：functools.wraps</span></a></li></ol>
+        
+    </div>
+</aside>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+        Total:
+        <strong id="busuanzi_value_site_pv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+        &nbsp; | &nbsp;
+        Visitors:
+        <strong id="busuanzi_value_site_uv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2019
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+</body>
+</html>
