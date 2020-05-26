@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <html lang="python web">
-<head><meta name="generator" content="Hexo 3.8.0">
+<head>
     <!--Setting-->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -16,17 +16,17 @@
     <link rel="dns-prefetch" href="http://chendongqing.com">
     <!--SEO-->
 
-    <meta name="keywords" content="JavaScript">
+    <meta name="keywords" content="JavaScript" />
 
 
-    <meta name="description" content="JavaScript立即执行函数需求：​    有些函数从出生，到执行完毕，只执行一次，比如说我们想求一个特别复杂的数，计算完之后，就直接把值拿过来用就可以了，并不需要每次都去计算这个数，这样的...">
+    <meta name="description" content="JavaScript立即执行函数需求：​    有些函数从出生，到执行完毕，只执行一次，比如说我们想求一个特别复杂的数，计算完之后，就直接把值拿过来用就可以了，并不需要每次都去计算这个数，这样的..." />
 
 
 
-<meta name="robots" content="all">
-<meta name="google" content="all">
-<meta name="googlebot" content="all">
-<meta name="verify" content="all">
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
 
     <!--Title-->
 
@@ -43,9 +43,11 @@
 
 
 
-<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
-<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
-<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
 
 
 
@@ -64,9 +66,9 @@
 
     
 
-</head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
-</html>
+
 <!--[if lte IE 8]>
 <style>
     html{ font-size: 1em }
@@ -77,9 +79,9 @@
 <![endif]-->
 
 <body>
-    <header class="main-header">
+    <header class="main-header"  >
     <div class="main-header-box">
-        <a class="header-avatar" href="/" title="勾陈">
+        <a class="header-avatar" href="/" title='勾陈'>
             <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
         </a>
         <div class="branding">
@@ -149,7 +151,7 @@
     
         <span class="categories-meta fa-wrap">
             <i class="fa fa-folder-open-o"></i>
-            <a class="category-link" href="/categories/前端/">前端</a>
+            <a class="category-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a>
         </span>
     
 
@@ -158,7 +160,7 @@
             <i class="fa fa-tags"></i>
             <span class="tags-meta">
                 
-                    <a class="tag-link" href="/tags/JavaScript/">JavaScript</a>
+                    <a class="tag-link" href="/tags/JavaScript/" rel="tag">JavaScript</a>
                 
             </span>
         </span>
@@ -180,6 +182,10 @@
 </div>
             
             
+            <p class="fa fa-exclamation-triangle warning">
+                本文于<strong>372</strong>天之前发表，文中内容可能已经过时。
+            </p>
+        
     </div>
     
     <div class="post-body post-content">
@@ -190,41 +196,57 @@
 <p>2.立即执行函数定义的任何变量和函数，都会在执行结束时被销毁。这样可以减少闭包占用的内存问题</p>
 <p>3.立即执行函数常用于第三方库，例如jQuery开篇用的就是立即执行函数，</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params">window, undefined</span>) </span>&#123;</span><br><span class="line">   <span class="comment">// jQuery 代码</span></span><br><span class="line">&#125;)(<span class="built_in">window</span>);</span><br></pre></td></tr></table></figure>
+
 <p>他的好处在于隔离作用域，任何一个第三方库都会存在大量的变量和函数，为了避免变量污染（命名冲突） 想到的解决办法就是使用立即执行函数。</p>
 <h4 id="详细解读立即执行函数"><a href="#详细解读立即执行函数" class="headerlink" title="详细解读立即执行函数"></a><strong>详细解读立即执行函数</strong></h4><h5 id="写法："><a href="#写法：" class="headerlink" title="写法："></a><strong>写法：</strong></h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; </span><br><span class="line">                   ======&gt;      (<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;())</span><br><span class="line">&#125;())</span><br></pre></td></tr></table></figure>
+
 <p>接下来我们往里添加一些内容</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; </span><br><span class="line">    <span class="keyword">var</span> a = <span class="number">5</span>,b = <span class="number">5</span>;</span><br><span class="line">    <span class="built_in">console</span>.log(a+b);</span><br><span class="line">&#125;()) </span><br><span class="line"><span class="comment">//这个函数运行完就找不见了，他也没有名字</span></span><br></pre></td></tr></table></figure>
+
 <p>如果我们给他添加名字呢</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span> <span class="title">chen</span>(<span class="params"></span>)</span>&#123; </span><br><span class="line">    <span class="keyword">var</span> a = <span class="number">5</span>,b = <span class="number">5</span>;</span><br><span class="line">    <span class="built_in">console</span>.log(a+b);</span><br><span class="line">&#125;())</span><br><span class="line">&gt; chen</span><br><span class="line"><span class="comment">//代码执行完，在控制台找chen这个函数会报错，提示 chen is not defined!</span></span><br></pre></td></tr></table></figure>
+
 <p>这告诉我们，这个函数执行完毕就会被销毁，再也不存在了，无论有没有名字，这也是javascript给我们提供的唯一一个办法手动销毁函数。</p>
 <p><span style="color:red">立即执行函数和普通函数区别是什么呢，唯一的区别就是，立即执行函数,执行完毕会被立即释放，其他就没有了</span></p>
 <p> 例如立即执行函数和其他函数一样 ，有预编译，可以有参数 ，而且得有返回值，如果没返回值那这个函数运行完就运行完了，啥也没存下来，岂不是很坑</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num = (<span class="function"><span class="keyword">function</span> (<span class="params">a,b,c</span>)</span>&#123; </span><br><span class="line">              <span class="keyword">var</span> d = a + b + c;</span><br><span class="line">              <span class="keyword">return</span> d;</span><br><span class="line">           &#125;(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>))</span><br></pre></td></tr></table></figure>
+
 <h4 id="立即执行函数的两种写法"><a href="#立即执行函数的两种写法" class="headerlink" title="立即执行函数的两种写法"></a><strong>立即执行函数的两种写法</strong></h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;())      <span class="comment">//W3C 建议第一种写法</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;)()</span><br></pre></td></tr></table></figure>
+
 <p>这是为啥哩，接下来，深究其原理：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">var</span> a = <span class="number">123</span>;</span><br><span class="line">&#125;()</span><br></pre></td></tr></table></figure>
+
 <p>这段代码可以执行吗？   按理说 调用函数是直接写 test(),就可以直接运行，那么我们直接在函数后面，加上括号，他能运行吗？？</p>
 <p>答案是不能运行，会报错！ 因为只有<span style="color:red"> 表达式</span> 才能被执行符号执行！ 而上面的代码是函数声明</p>
 <p>那我们想起了，在函数声明的时候，还有一种方式，叫做表达式声明</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> test = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"chen"</span>)</span><br><span class="line">&#125;()</span><br></pre></td></tr></table></figure>
+
 <p>这样写就没有问题了，是可以运行的！</p>
 <h4 id="能被执行符号执行的表达式，这个函数的名字就会被忽略"><a href="#能被执行符号执行的表达式，这个函数的名字就会被忽略" class="headerlink" title="能被执行符号执行的表达式，这个函数的名字就会被忽略"></a><strong>能被执行符号执行的表达式，这个函数的名字就会被忽略</strong></h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> test = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"chen"</span>)  <span class="comment">//var test 是函数声明，他会把等号后面的内容变成表达式</span></span><br><span class="line">&#125;()</span><br></pre></td></tr></table></figure>
+
 <p>把这段代码运行，在控制台打印 test,会发现 test已经不再是一个函数了，会变成未定义 undefined, 为什么呢，就是因为被执行符号执行过的表达式，会放弃自己的名字。所以说，被执行符号执行的表达式，就成为了立即执行函数</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">+ <span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"chen"</span>)</span><br><span class="line">&#125;();</span><br></pre></td></tr></table></figure>
+
 <p>既然函数声明不能被执行，只有表达式才能执行，那我们在函数声明的前方加一个 “+”  一个’正’符号加上函数声明，就可以把这个函数变为一个表达式，那么他就可以运行了，所以上方代码也是可以运行的，不过运行了之后，函数名会被放弃。test就消失了。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- <span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"chen"</span>)</span><br><span class="line">&#125;();</span><br></pre></td></tr></table></figure>
+
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">! <span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"chen"</span>)</span><br><span class="line">&#125;();</span><br></pre></td></tr></table></figure>
+
 <p>‘正’号可以，’负’号当然也是可以的， 而且’!’ ，’非’这个符号也是可以的，乘除就不行了，因为是运算符号。</p>
 <p>凡是变成表达式，就可以被执行符号执行，那么 把函数放到 ( ) 中 ，他也能变成表达式</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"chen"</span>)</span><br><span class="line">&#125;())</span><br></pre></td></tr></table></figure>
+
 <p>外面的括号会把里面的函数变为表达式，然后再被小括号执行</p>
 <p>刚才已经无数次强调，表达式被执行了之后，会放弃自己的名字，所以这个test写不写都无伤大雅，干脆就不写</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(function () &#123;</span><br><span class="line">    console.log(&quot;chen&quot;)</span><br><span class="line">&#125;())</span><br></pre></td></tr></table></figure>
+
 <p>这就是立即执行函数由来，立即执行函数可以有各种各样的写法，只不过这种是推荐的写法。</p>
 <h5 id="坑"><a href="#坑" class="headerlink" title="坑"></a><strong>坑</strong></h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span> (<span class="params">a,b,c,d</span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(a + b + c + d);</span><br><span class="line">&#125;(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>)</span><br></pre></td></tr></table></figure>
+
 <p> 按理说，这种写法会报错，函数是不能被执行的，</p>
 <p>但是JS在解释这个代码的时候，因为( ) 里面有内容‘1，2，3，4，’认为能不报错尽量不报错，所以会把’(1,2,3,4)’ 当作表达式，而不是执行符号</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">function test (a,b,c,d)&#123;</span><br><span class="line">	console.log(a + b + c + d);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">(1,2,3,4)</span><br></pre></td></tr></table></figure>
+
 <p>所以这种情况不会报错，这个问题在实际情况遇不到，遇到了也是出现在某公司的面试题当中。</p>
 <hr>
 <p>资料参考 ： 渡一姬成老师JS精英课堂内容讲解 </p>
@@ -262,8 +284,13 @@
 
 <div class="article-nav prev-next-wrap clearfix">
     
+        <a href="/2020/05/26/windowToMac/" class="pre-post btn btn-default" title='如何将hexo window迁移至Mac'>
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">如何将hexo window迁移至Mac</span>
+        </a>
     
-        <a href="/2019/05/13/closure/" class="next-post btn btn-default" title="JavaScript闭包">
+    
+        <a href="/2019/05/13/closure/" class="next-post btn btn-default" title='JavaScript闭包'>
             <span class="hidden-lg">下一篇</span>
             <span class="hidden-xs">JavaScript闭包</span><i class="fa fa-angle-right fa-fw"></i>
         </a>
@@ -300,7 +327,7 @@
     <div class="widget">
         <h3 class="title">Table of Contents</h3>
         
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#JavaScript立即执行函数"><span class="toc-text">JavaScript立即执行函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#需求："><span class="toc-text">需求：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#定义"><span class="toc-text">定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#作用"><span class="toc-text">作用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#详细解读立即执行函数"><span class="toc-text">详细解读立即执行函数</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#写法："><span class="toc-text">写法：</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#立即执行函数的两种写法"><span class="toc-text">立即执行函数的两种写法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#能被执行符号执行的表达式，这个函数的名字就会被忽略"><span class="toc-text">能被执行符号执行的表达式，这个函数的名字就会被忽略</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#坑"><span class="toc-text">坑</span></a></li></ol></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#JavaScript立即执行函数"><span class="toc-text">JavaScript立即执行函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#需求："><span class="toc-text">需求：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#定义"><span class="toc-text">定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#作用"><span class="toc-text">作用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#详细解读立即执行函数"><span class="toc-text">详细解读立即执行函数</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#写法："><span class="toc-text">写法：</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#立即执行函数的两种写法"><span class="toc-text">立即执行函数的两种写法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#能被执行符号执行的表达式，这个函数的名字就会被忽略"><span class="toc-text">能被执行符号执行的表达式，这个函数的名字就会被忽略</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#坑"><span class="toc-text">坑</span></a></li></ol></li></ol></li></ol></li></ol></li></ol>
         
     </div>
 </aside>
@@ -364,7 +391,9 @@
     <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 
-<script src="/js/app.js?rev=@@hash"></script>
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
 
 </body>
 </html>
