@@ -19,8 +19,9 @@
     <meta name="keywords" content="web" />
 
 
-    <meta name="description" content="如何将hexo 从window迁移至Mac
-" />
+    <meta name="description" content="如何将hexo 从windows迁移至Mac
+之前用windows系统，使用hexo搭建了个人博客，托管到了GitHub上，也就是大家现在所看到的网站，
+后来更换了mac,那么如何将原有的环境以..." />
 
 
 
@@ -32,7 +33,7 @@
     <!--Title-->
 
 
-<title>如何将hexo window迁移至Mac | 勾陈的博客</title>
+<title>如何将hexo windows迁移至Mac | 勾陈的博客</title>
 
 
     <link rel="alternate" href="/atom.xml" title="勾陈的博客" type="application/atom+xml">
@@ -143,9 +144,9 @@
                     <p id="process"></p>
 <article class="post">
     <div class="post-head">
-        <h1 id="如何将hexo window迁移至Mac">
+        <h1 id="如何将hexo windows迁移至Mac">
             
-	            如何将hexo window迁移至Mac
+	            如何将hexo windows迁移至Mac
             
         </h1>
         <div class="post-meta">
@@ -186,7 +187,34 @@
     </div>
     
     <div class="post-body post-content">
-        <h1 id="如何将hexo-从window迁移至Mac"><a href="#如何将hexo-从window迁移至Mac" class="headerlink" title="如何将hexo 从window迁移至Mac"></a><strong>如何将hexo 从window迁移至Mac</strong></h1><hr>
+        <h1 id="如何将hexo-从windows迁移至Mac"><a href="#如何将hexo-从windows迁移至Mac" class="headerlink" title="如何将hexo 从windows迁移至Mac"></a><strong>如何将hexo 从windows迁移至Mac</strong></h1><hr>
+<p>之前用windows系统，使用hexo搭建了个人博客，托管到了GitHub上，也就是大家现在所看到的网站，</p>
+<p>后来更换了mac,那么如何将原有的环境以最方便的方式，迁移至mac，可以继续更新文章呢？费了一小番功夫，得以实现，给大家分享一下</p>
+<h3 id="一-换系统之前，将原来的hexo根目录保存下来"><a href="#一-换系统之前，将原来的hexo根目录保存下来" class="headerlink" title="一. 换系统之前，将原来的hexo根目录保存下来"></a>一. 换系统之前，将原来的hexo根目录保存下来</h3><h3 id="二-在-Mac安装git和node-js"><a href="#二-在-Mac安装git和node-js" class="headerlink" title="二. 在 Mac安装git和node.js"></a>二. 在 Mac安装git和node.js</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;git-scm.com&#x2F;</span><br><span class="line"></span><br><span class="line">http:&#x2F;&#x2F;nodejs.cn&#x2F;download&#x2F;</span><br></pre></td></tr></table></figure>
+
+<h3 id="三-安装hexo"><a href="#三-安装hexo" class="headerlink" title="三. 安装hexo"></a>三. 安装hexo</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">用node.js来安装</span><br><span class="line">npm install hexo g</span><br></pre></td></tr></table></figure>
+
+<h3 id="四-初始化hexo目录"><a href="#四-初始化hexo目录" class="headerlink" title="四. 初始化hexo目录"></a>四. 初始化hexo目录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">新建一个hexo目录（文件夹），  在当前文件夹下，打开终端，建议使用visual studio code开发工具，比较方便可直接打开终端</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;终端下新建文件夹 bolg</span><br><span class="line">mkdir bolg</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;进入bolg</span><br><span class="line">cd blog</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;初始化hexo目录</span><br><span class="line">hexo init</span><br><span class="line"></span><br><span class="line">在用hexo s测试是否成功，打开localhost:4000查看本地</span><br></pre></td></tr></table></figure>
+
+<h3 id="五-生成SSH密钥"><a href="#五-生成SSH密钥" class="headerlink" title="五. 生成SSH密钥"></a>五. 生成SSH密钥</h3><p>blog文件夹的终端下，生成ssh密钥</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ssh-keygen -t rsa -C &quot;youremail@example.com&quot;    &#x2F;&#x2F;后面那个是注册邮箱</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;进入.ssh文件夹： </span><br><span class="line">cd ~&#x2F;.ssh，</span><br><span class="line"></span><br><span class="line">然后打开里面的 id_rsa.pub文件，里面的内容就是 SSH key，复制全部内容；</span><br></pre></td></tr></table></figure>
+
+<p><img src="/Users/chen/Documents/HexoForMac/bolg/source/_posts/assets/ssh.png" alt=""></p>
+<h3 id="六-更新GitHub上密钥"><a href="#六-更新GitHub上密钥" class="headerlink" title="六. 更新GitHub上密钥"></a>六. 更新GitHub上密钥</h3><p>网页打开 github 的设置：Settings -&gt; SSH and GPG keys，点击绿色的按钮 New SSH key，然后在输入框中输入刚才复制的内容；</p>
+<p>保存后，github 会向你的邮箱发送一个验证链接（记得要去登录邮箱验证，不然之后的 hexo d 部署会一直不成功的！）；</p>
+<p>测试一下是否成功：ssh <a href="mailto:git@github.com">git@github.com</a>，<br>看到以下即成功：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PTY allocation request failed on channel 0</span><br><span class="line">Hi gjincai! You&#39;ve successfully authenticated, but GitHub does not provide shell access.</span><br><span class="line">Connection to github.com closed.</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="七-文件配置转移"><a href="#七-文件配置转移" class="headerlink" title="七. 文件配置转移"></a>七. 文件配置转移</h3><p>windows 下的博客根目录 hexo，复制该目录下的：<code>_config.yml</code>, <code>scaffolds</code>, <code>source</code>, <code>themes</code>；<br>mac 下的博客根目录 hexo，把刚才复制的内容，直接覆盖替换相同的文件文件夹。</p>
+<h3 id="八-设置个人信息"><a href="#八-设置个人信息" class="headerlink" title="八. 设置个人信息"></a>八. 设置个人信息</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name &quot;yourname”</span><br><span class="line">git config --global user.email youremail@example.com</span><br></pre></td></tr></table></figure>
+
+<p>接下来就可以正常的发布文章了</p>
+<p> hexo g        hexo d   （注意终端路径一定是在 bolg目录下）</p>
+<p>如果结果会提示ERROR Deployer not found: git</p>
+<p>安装以下再尝试：npm install hexo-deployer-git –save（若提示有关权限不足的，加sudo，mac上但凡出现权限不足，就在最开始加sudo）</p>
+<p>完。</p>
 
     </div>
     
@@ -258,7 +286,7 @@
     <div class="widget">
         <h3 class="title">Table of Contents</h3>
         
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#如何将hexo-从window迁移至Mac"><span class="toc-text">如何将hexo 从window迁移至Mac</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#如何将hexo-从windows迁移至Mac"><span class="toc-text">如何将hexo 从windows迁移至Mac</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#一-换系统之前，将原来的hexo根目录保存下来"><span class="toc-text">一. 换系统之前，将原来的hexo根目录保存下来</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二-在-Mac安装git和node-js"><span class="toc-text">二. 在 Mac安装git和node.js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三-安装hexo"><span class="toc-text">三. 安装hexo</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四-初始化hexo目录"><span class="toc-text">四. 初始化hexo目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#五-生成SSH密钥"><span class="toc-text">五. 生成SSH密钥</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#六-更新GitHub上密钥"><span class="toc-text">六. 更新GitHub上密钥</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#七-文件配置转移"><span class="toc-text">七. 文件配置转移</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#八-设置个人信息"><span class="toc-text">八. 设置个人信息</span></a></li></ol></li></ol></li></ol>
         
     </div>
 </aside>
