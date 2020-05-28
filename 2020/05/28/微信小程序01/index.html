@@ -1,0 +1,393 @@
+<!DOCTYPE HTML>
+<html lang="python web">
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="勾陈的博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://chendongqing.com">
+    <!--SEO-->
+
+    <meta name="keywords" content="前端" />
+
+
+    <meta name="description" content="微信小程序
+本教程终极目标是人人都会微信小程序，人人都有属于自己的微信小程序！   ——chendq
+第一节课，我们来学习如何发布一个属于自己的小程序
+一 、开发工具准备1.微信开发账号​   ..." />
+
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+
+    <!--Title-->
+
+
+<title>微信小程序教程01 | 勾陈的博客</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="勾陈的博客" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico">
+
+    
+
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+
+
+
+
+    
+	<div class="hide">
+		<script type="text/javascript">
+			var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+		</script>
+	</div>
+
+
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header"  >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='勾陈'>
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                <h2> 不积硅步 无以至千里 </h2>
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="http://chendongqing.com">勾陈的博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa icon1 iconn"></i>Home</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/前端/"><i class="fa icon2 iconn"></i>前端</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/后端/"><i class="fa icon3 iconn"></i>后端</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/书籍/"><i class="fa icon4 iconn"></i>书籍</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/工具/"><i class="fa icon5 iconn"></i>工具</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/archives/"><i class="fa icon6 iconn"></i>时间轴</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="微信小程序教程01">
+            
+	            微信小程序教程01
+            
+        </h1>
+        <div class="post-meta">
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/%E5%B0%8F%E7%A8%8B%E5%BA%8F/">小程序</a>
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-link" href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag">前端</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2020/05/28</span>
+        </span>
+        
+            <span class="fa-wrap">
+                <i class="fa fa-eye"></i>
+                <span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    
+</div>
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <h1 id="微信小程序"><a href="#微信小程序" class="headerlink" title="微信小程序"></a>微信小程序</h1><hr>
+<p>本教程终极目标是人人都会微信小程序，人人都有属于自己的微信小程序！   ——chendq</p>
+<p>第一节课，我们来学习如何发布一个属于自己的小程序</p>
+<h2 id="一-、开发工具准备"><a href="#一-、开发工具准备" class="headerlink" title="一 、开发工具准备"></a>一 、开发工具准备</h2><h4 id="1-微信开发账号"><a href="#1-微信开发账号" class="headerlink" title="1.微信开发账号"></a>1.微信开发账号</h4><p>​            <a href="https://mp.weixin.qq.com/cgi-bin/wx" target="_blank" rel="noopener">https://mp.weixin.qq.com/cgi-bin/wx</a></p>
+<p>​            <img width="688px" src="https://tva1.sinaimg.cn/large/007S8ZIlly1gf7y9lythdj313w0u0kh9.jpg"></p>
+<p>点击左上角的 ’小程序‘ 文字跳转到页面</p>
+<img width="688" src="https://tva1.sinaimg.cn/large/007S8ZIlly1gf7ydrwgssj313m0u0u0x.jpg">
+
+<p>点击右上角 ‘立即注册’ 文字，根据信息填写，注册微信小程序账号</p>
+<img width="688px"  src="https://tva1.sinaimg.cn/large/007S8ZIlly1gf7ygoobuhj31cn0u0jwc.jpg"/>
+
+<p>需要注意的是，在注册页面会让你选择注册的账号类型，例如，订阅号，服务号，小程序，企业微信。咱们在这里选择小程序就可以了</p>
+<p>一个微信可以绑定多个账号，像我就以前注册过公众号，互相之间没有影响，只不过在扫码登录的时候，会让你选择登陆账号</p>
+<img width="300px" src="https://tva1.sinaimg.cn/large/007S8ZIlly1gf7yl5bvp3j30u01hcwgg.jpg">
+
+<p>尴尬的是我的公众号已经太久没用被冻结了，不过这里不重要，选择小程序登陆就可以，如果不知道在哪登陆，向上看，在图片二中扫码登录。</p>
+<img width="688" src="https://tva1.sinaimg.cn/large/007S8ZIlly1gf84g170txj314n0u0wpb.jpg">
+
+
+
+<h4 id="2-微信开发者工具"><a href="#2-微信开发者工具" class="headerlink" title="2.微信开发者工具"></a>2.微信开发者工具</h4><p>​    <a href="https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html" target="_blank" rel="noopener">https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html</a></p>
+<img width="688px" src="https://tva1.sinaimg.cn/large/007S8ZIlly1gf84l6rgmzj314r0u0gzx.jpg"/>
+
+<p>下载与自己电脑系统匹配的版本，安装完成之后准备工作就结束</p>
+<h2 id="二、微信小程序开发工具的使用"><a href="#二、微信小程序开发工具的使用" class="headerlink" title="二、微信小程序开发工具的使用"></a>二、微信小程序开发工具的使用</h2><p>打开微信开发者工具，会提示我们需要微信扫码登录</p>
+<img width="488" src="https://tva1.sinaimg.cn/large/007S8ZIlly1gf84ref0rvj30ik0qen06.jpg">
+
+<p>扫码登录之后，我们可以看到</p>
+<img width="688" src="https://tva1.sinaimg.cn/large/007S8ZIlly1gf84sybafjj318k0u0tdp.jpg">
+
+<p>在这里，我们可以先导入一个现成的写好的微信小程序试试效果</p>
+<p>选择倒入项目，直接倒入即可</p>
+<p>给大家提供一些现成的项目，供大家下载</p>
+<img width="688px" src="https://tva1.sinaimg.cn/large/007S8ZIlly1gf84w4snt3j31gw0u00y9.jpg">
+
+<p><strong>在这里需要注意的是,有一个选项是 appid，在这里我们可以点击下方问号，获得一个测试的ID，如果使用测试id的话，进入开发工具是没有发布按钮的， 我们今天的目的，就是发布一个自己的小程序，所以我们不用测试号，而是去刚才的开发账号中获取一下。</strong></p>
+<img width="688px" src="https://tva1.sinaimg.cn/large/007S8ZIlly1gf8509176zj314a0u0dsk.jpg">
+
+<p>找到开发账号页面，找到最下方的设置按钮，右侧出现如图基本信息，然后向下滑动，拉到最下方，就可以找到自己的app id了</p>
+<img width="588px" src="https://tva1.sinaimg.cn/large/007S8ZIlly1gf852pb6znj314p0u0n5a.jpg">
+
+<p>在进入开发者工具之前填好这些信息，就可以进入了。</p>
+<p>这里我以小程序地图demo为例，给大家演示，进入之后</p>
+<img width="688px" src="https://tva1.sinaimg.cn/large/007S8ZIlly1gf857a7f3zj31bm0u0ws7.jpg">
+
+<p>点击中间最上方的大眼睛按钮（预览），就会生成一个二维码，这事就可以用微信扫码查看效果了。</p>
+<h2 id="三、上传小程序"><a href="#三、上传小程序" class="headerlink" title="三、上传小程序"></a>三、上传小程序</h2><p>点击开发者工具右上角的上传按钮，就可以上传代码了。</p>
+<p>点击之后会弹出提示，上传代码后需要管理员在小程序管理后台将本次上传设置为体验版本，点击确定，版本号输入一个1.0.0 </p>
+<p>点击上传！</p>
+<p>上传成功后，返回开发账号界面</p>
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gf85d3vzi8j314i0u0tig.jpg">
+
+<p>可以看到在开发版本中，多了一个版本的代码，点击提交审核按钮，等待审核</p>
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gf85euhe05j314r0u0k2c.jpg">
+
+<p>这时会显示，审核版本中有等待审核的项目。</p>
+<p>稍等片刻之后，就审核完成了。</p>
+<p>如果长时间没有显示审核完成，就退出账号，重新扫码登录</p>
+<p>审核成功之后，点击发布线上版本，就大功告成了</p>
+<p>成功之后，可以通过微信搜索自己小程序的名字，搜到自己的小程序，也可以分享给他人，让他人来使用自己的小程序。</p>
+<p>如果想通过二维码分享自己的小程序，就点击页面上方的工具，生成二维码即可</p>
+<p><strong>下节课我们将学习小程序的目录结构，视图与渲染，事件，等知识，大家拭目以待～</strong></p>
+
+    </div>
+    
+        <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            
+                <span class="reward-type">
+                    <img class="wechat" src="http://ww4.sinaimg.cn/large/006tNc79ly1g390jolm8xj30fu0fn0un.jpg"><b>微信打赏</b>
+                </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">赞赏是不耍流氓的鼓励</p>
+</div>
+
+
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="https://chendongqing.github.io" target="_blank">勾陈的博客</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+        <a href="/2020/05/27/%E6%9E%81%E7%AE%80%E7%AE%A1%E7%90%86%E6%B3%95%E5%88%9902/" class="next-post btn btn-default" title='书籍分享：极简管理法则02'>
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">书籍分享：极简管理法则02</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+	
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zMzA1MS85NjEz">
+  <script type="text/javascript">
+     (function(d, s) {
+         var j, e = d.getElementsByTagName(s)[0];
+         if (typeof LivereTower === 'function') { return; }
+         j = d.createElement(s);
+         j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+         j.async = true;
+         e.parentNode.insertBefore(j, e);
+     })(document, 'script');
+  </script>
+</div>
+
+
+    </div>
+
+
+
+
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">Table of Contents</h3>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#微信小程序"><span class="toc-text">微信小程序</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#一-、开发工具准备"><span class="toc-text">一 、开发工具准备</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-微信开发账号"><span class="toc-text">1.微信开发账号</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-微信开发者工具"><span class="toc-text">2.微信开发者工具</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、微信小程序开发工具的使用"><span class="toc-text">二、微信小程序开发工具的使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、上传小程序"><span class="toc-text">三、上传小程序</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+        Total:
+        <strong id="busuanzi_value_site_pv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+        &nbsp; | &nbsp;
+        Visitors:
+        <strong id="busuanzi_value_site_uv">
+            <i class="fa fa-spinner fa-spin"></i>
+        </strong>
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2019
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+
+</body>
+</html>
